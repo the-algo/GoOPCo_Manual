@@ -1,0 +1,533 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <accordion>
+                <accordion-group isOpened="false">
+                    <accordion-heading id="accordion2" (click)="onclicktoggle('accordion2')">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">
+                                <span id="icon2" class="glyphicon glyphicon-minus"></span> Cash Flow Calculator
+                            </h2>
+                        </div>
+                    </accordion-heading>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4>
+                                    Input values into this interactive calculator to create unique investment and cash flow scenarios.
+                                </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="assets/logo.png" width="200px" />
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row" *ngIf="!mobileView">
+                            <div class="col-md-6" style="margin-top: 70px; padding: 20px 0px 10px 25px; border: 1px solid black">
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:center; padding-bottom: 30px;">
+                                        <h3>
+                                            <b>INVESTMENT AMOUNT AND TERMS</b>
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:50px">
+                                    <div class="col-md-6">
+                                        <b>Investment Amount:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Hypothetical_investment_model" min="0" (change)="hypothetical()" min="0" class="form-control"
+                                            />
+                                            <span class="input-group-addon" style="font-weight:bold">&nbsp;$&nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:50px">
+                                    <div class="col-md-6">
+                                        <b>Net Revenue Interest:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="nri_percentage" min="0" (change)="hypothetical()" min="0" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold">%&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:50px">
+                                    <div class="col-md-6">
+                                        <b>Production Expenses Ratio:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <input type="number" min="0" max="100" [(ngModel)]="Operating_Expenses_Ratio" (change)="hypothetical()" class="form-control"
+                                            />
+                                            <span class="input-group-addon" style="font-weight:bold; font-size: 16px">%&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:50px">
+                                    <div class="col-md-6">
+                                        <b>State O&G Production Taxes:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select class="form-control" name="taxValue" (change)="onChange($event.target.value)">
+                                            <option *ngFor="let item of options" [value]="item.taxValue">
+                                                {{ item.stateName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:60px">
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <b>Oil Tax</b>
+                                            </div>
+                                            <div class="col-md-6">
+                                                {{ tempOil/100 | percent }}
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <b>Gas Tax</b>
+                                            </div>
+                                            <div class="col-md-6">
+                                                {{ tempGas/100 | percent }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div id="arrow" class="col-md-5" style="text-align: center">
+                                                Estimated Monthly Income
+                                                <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                                <br>
+                                                <span style="font-weight: bold">{{ Potential_Monthly_model | currency:'USD' : true : '1.2-2' }}</span>
+                                            </div>
+                                            <div class="col-md-6" style="text-align: center">
+                                                Estimated Total Net Cash Flow
+                                                <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                                <br>
+                                                <span style="color: green; font-weight: bold">{{ Total_Potential_model | currency:'USD' : true : '1.2-2' }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <canvas baseChart id="myChart2" [options]="barChartOptions" [colors]="lineChartColors" [datasets]="lineData1" [labels]="lineChartLabels1"
+                                            [chartType]="'line'" height="280px"></canvas>
+                                        <i style="float:right; margin-top: -50px" class="glyphicon glyphicon-question-sign" title=""></i>
+
+                                    </div>
+                                    <div class="col-md-2" style="margin-top: 90px;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="round round-lg hollow ">{{ roi_percent ? roi_percent : "0%" }}</div>
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h2 style="text-align: center; font-weight:bold; color: rgba(8, 173, 63, 0.75)">ROI</h2>
+                                            </div>
+                                            <div class="col-md-1" style="padding-top: 30px">
+                                                <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <canvas baseChart id="myChart1" [options]="barChartOptions" [colors]="lineChartColors" [datasets]="lineData" [labels]="lineChartLabels"
+                                            [chartType]="'line'" height="275px"></canvas>
+                                    </div>
+                                    <div class="col-md-2" style="margin-left: -15px; margin-top: 75px;">
+                                        <div class="round round-lg hollow ">{{ roi_percent ? roi_percent : "0%" }}</div>
+                                        <br>
+                                        <h2 style="padding-left:15px; text-align: center; font-weight:bold; color: rgba(8, 173, 63, 0.75)">ROI</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-10">
+                                    <canvas baseChart id="myChart2" [options]="barChartOptions" [colors]="lineChartColors" [datasets]="lineData1" [labels]="lineChartLabels1"
+                                        [chartType]="'line'" height="275px"></canvas>
+                                </div>
+                                <div class="col-md-2" style="margin-left: -15px; margin-top: 75px;">
+                                    <div class="round round-lg hollow ">{{ roi_percent ? roi_percent : "0%" }}</div>
+                                    <br>
+                                    <h2 style="padding-left:15px; text-align: center; font-weight:bold; color: rgba(8, 173, 63, 0.75)">ROI</h2>
+                                </div>
+                            </div>
+                        </div>
+ -->
+                        <div class="row" *ngIf="mobileView">
+
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div id="arrow" class="col-xs-6" style="text-align: center">
+                                                Estimated Monthly Income
+                                                <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                                <br>
+                                                <span style="font-weight: bold">{{ Potential_Monthly_model | currency:'USD' : true : '1.2-2' }}</span>
+                                            </div>
+                                            <div class="col-xs-6" style="text-align: center">
+                                                Estimated Total Net Cash Flow
+                                                <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                                <br>
+                                                <span style="color: green; font-weight: bold">{{ Total_Potential_model | currency:'USD' : true : '1.2-2' }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-xs-10">
+                                        <canvas baseChart id="myChart2" [options]="barChartOptions" [colors]="lineChartColors" [datasets]="lineData1" [labels]="lineChartLabels1"
+                                            [chartType]="'line'" height="300px"></canvas>
+                                        <i style="float: right; margin-top: -72px" class="glyphicon glyphicon-question-sign" title=""></i>
+
+                                    </div>
+                                    <div class="col-xs-2" style="margin-top: 35px;">
+                                        <div style="margin-left: -15px; text-align: center" class="round round-sm holl">{{ roi_percent ? roi_percent : "0%" }}</div>
+                                        <br>
+                                        <h3 style="margin-left: -10px; font-weight:bold; color: rgba(8, 173, 63, 0.75)">ROI</h3>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                    </div>
+                                </div>
+                                <!-- 
+                                <div class="row">
+                                    <div class="col-xs-10">
+                                        <canvas baseChart id="myChart" [options]="barChartOptions" [colors]="lineChartColors" [datasets]="lineData" [labels]="lineChartLabels"
+                                            [chartType]="'line'" height="200px"></canvas>
+                                    </div>
+                                    <div class="col-xs-2" style="margin-top: 20px;">
+                                        <div style="margin-left: -15px; text-align: center" class="round round-sm holl">{{ roi_percent ? roi_percent : "0%" }}</div>
+                                        <br>
+                                        <h3 style="margin-left: -10px; font-weight:bold; color: rgba(8, 173, 63, 0.75)">ROI</h3>
+                                    </div>
+                                </div>
+ -->
+                            </div>
+
+                            <div class="col-xs-12" style="margin-top: 25px; padding:20px 10px 20px 10px;  border: 1px solid black">
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:center; padding-bottom: 30px;">
+                                        <h3>
+                                            <b>INVESTMENT AMOUNT AND TERMS</b>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="row" style="min-height:70px">
+                                    <div class="col-md-6">
+                                        <b>Investment Amount:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Hypothetical_investment_model" min="0" (change)="hypothetical()" min="0" class="form-control"
+                                            />
+                                            <span class="input-group-addon" style="font-weight:bold">&nbsp;$&nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:70px">
+                                    <div class="col-md-6">
+                                        <b>Net Revenue Interest:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="nri_percentage" min="0" (change)="hypothetical()" min="0" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold; font-size: 16px">%&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:70px">
+                                    <div class="col-md-6">
+                                        <b>Production Expenses Ratio:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <input type="number" min="0" max="100" [(ngModel)]="Operating_Expenses_Ratio" (change)="hypothetical()" class="form-control"
+                                            />
+                                            <span class="input-group-addon" style="font-weight:bold; font-size: 16px">%&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:70px">
+                                    <div class="col-md-6">
+                                        <b>State O&G Production Taxes:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select class="form-control" name="taxValue" (change)="onChange($event.target.value)">
+                                            <option *ngFor="let item of options" [value]="item.taxValue">
+                                                {{ item.stateName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:20px">
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-5">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <b>Oil Tax</b>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                {{ tempOil/100 | percent }}
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-5">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <b>Gas Tax</b>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                {{ tempGas/100 | percent }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div style="height: 30px; background: silver; text-align:center">
+                                    <h3>Prices & Production Rates</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="row">
+                                    <div style="text-align:center" class="col-md-12">
+                                        <b>OIL</b>
+                                    </div>
+                                    <div class="col-md-12" style="text-align:center">
+                                        <img src="assets/oil.png">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-8">
+                                        <b>Estimated Oil Price:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_oil_price_model" min="0" (change)="hypothetical()" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold; font-size: 16px">&nbsp;$&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row frame">
+                                    <div class="col-md-8"></div>
+                                    <div class="oil-price col-md-4">
+                                        <iframe style="border: none !important" src="https://the-algo.github.io/oil-value/"></iframe>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <b>Estimated Daily Oil Production:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_oil_model" min="0" (change)="hypothetical()" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold">BO</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <b>Estimated Total Oil Production:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_Oil_ultimate_recovery_model" min="0" (change)="hypothetical()" class="form-control"
+                                            />
+                                            <span class="input-group-addon" style="font-weight:bold">BO</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <br>
+                            </div>
+
+                            <div class="col-md-1">
+                                <div class="row">
+                                    <div style="text-align:center" class="col-md-12">
+                                        <b>GAS</b>
+                                    </div>
+                                    <div class="col-md-12" style="text-align:center">
+                                        <img src="assets/gas.png">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-8">
+                                        <b>Estimated Gas Price:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_gas_price_model" min="0" (change)="hypothetical()" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold; font-size: 16px">&nbsp;&nbsp;&nbsp;$&nbsp;&nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row frame">
+                                    <div class="col-md-8"></div>
+                                    <div class="gas-price col-md-4">
+                                        <iframe style="border: none !important" src="https://the-algo.github.io/gas-value/"></iframe>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <b>Estimated Daily Gas Production:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_gas_model" min="0" (change)="hypothetical()" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold">MCF</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <div class="row" style="min-height:50px">
+                                    <div class="col-md-8">
+                                        <b>Estimated Total Gas Production:</b>
+                                        <i class="glyphicon glyphicon-question-sign" title=""></i>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_Gas_ultimate_recovery_model" min="0" (change)="hypothetical()" class="form-control"
+                                            />
+                                            <span class="input-group-addon" style="font-weight:bold">MCF</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                        </div>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+    </div>
+
+    <!-- 
+    <div class="backdrop" [ngStyle]="{'display':display}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">{{title}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" style="text-align: center" *ngIf="graph">
+                            <canvas baseChart id="myChart1" [options]="barChartOptions" [colors]="lineChartColors" [datasets]="lineData" [labels]="lineChartLabels"
+                                [chartType]="'line'" height="200px"></canvas>
+                        </div>
+
+                        <div class="col-md-12" style="text-align: center" *ngIf="!graph">
+                            <canvas baseChart id="myChart2" [options]="barChartOptions" [colors]="lineChartColors" [datasets]="lineData1" [labels]="lineChartLabels1"
+                                [chartType]="'line'" height="200px"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" (click)="onCloseHandled()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     -->
+</div>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../node_modules/chart.js/src/chart.js"></script>
