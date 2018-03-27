@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
   public visit: number = -1;
   public currentgreencount: number = 0;
   public length: number = 0;
-  public zoom: number = 11;
+  public zoom: number = 9;
   public roi_percentage: number = 0;
   public slider_percentage: string = "0%";
 
@@ -288,7 +288,7 @@ export class AppComponent implements OnInit {
           this.previous = -1;
           this.current = -1;
           this.index = -1;
-          this.zoom = 11;
+          this.zoom = 9;
           this.visit = -1;
           this.clicked = -1;
           this.calculate();

@@ -113,6 +113,6 @@
         { "apiuwi": 42447037200000, "operatorname": "Goopco, Inc.", "leasename": "Mckeichan, Will", "county": "Throckmorton (Tx)", "reservior": "Strawn", "productionstatus": "Inactive", "drilltype": "V", "firstproddate": "Oct 48", "lastproddate": "Feb 93", "cumgas": "7411", "cumoil": "86010", "measureddepth": "2748", "state": "TX", "latitude": 33.0277646, "longitude": -99.239647, "grosscashflow": "0", "url": "assets/blue.png", "firsttwelveoil": "16861", "firsttwelvegas": "0", "firsttwentyfouroil": "16861", "firsttwentyfourgas": "0", "firstsixtygas": "0", "firstsixtyoil": "50713", "lasttwelveoil": "39", "lasttwelvegas": "74" },
         
         
-        { "apiuwi": null, "operatorname": "", "leasename": "", "county": "", "reservior": "", "productiontype": "", "productionstatus": "", "drilltype": "", "firstproddate": "", "lastproddate": "", "cumgas": "", "cumoil": "", "boe": "", "completiondate": "", "spuddate": "", "measureddepth": "", "state": "", "latitude": 33.1476870, "longitude": -99.0388324, "grosscashflow": "", "url": "assets/star.png" }
+       { "apiuwi": null, "operatorname": "", "leasename": "", "county": "", "reservior": "", "productiontype": "", "productionstatus": "", "drilltype": "", "firstproddate": "", "lastproddate": "", "cumgas": "", "cumoil": "", "boe": "", "completiondate": "", "spuddate": "", "measureddepth": "", "state": "", "latitude": null, "longitude": null, "grosscashflow": "", "url": "" }
     ]
 }
