@@ -329,8 +329,8 @@ export class AppComponent implements OnInit {
 
       for (var i = 0; i < this.markerarray.length - 1; i++) {
         this.infoWindowOpened = this.markerarray[i];
-        if (this.infoWindowOpened !== undefined && this.infoWindowOpened !== null)
-          this.infoWindowOpened.close();
+       // if (this.infoWindowOpened !== undefined && this.infoWindowOpened !== null)
+         // this.infoWindowOpened.close();
       }
 
       //this.markerarray = [];
@@ -338,8 +338,8 @@ export class AppComponent implements OnInit {
 
       this.calculatepayout();
 
-      if (this.infoWindowOpened !== null && this.infoWindowOpened !== undefined)
-        this.infoWindowOpened.innerHtml = this.latlong[this.index].roi_percentage;
+      //if (this.infoWindowOpened !== null && this.infoWindowOpened !== undefined)
+       // this.infoWindowOpened.innerHtml = this.latlong[this.index].roi_percentage;
     }
 
     // Setting the Text Color of ENCF if it is greater than 1511111
@@ -508,7 +508,7 @@ export class AppComponent implements OnInit {
 
       for (var i = 0; i < this.markerarray.length; i++) {
         this.infoWindowOpened = this.markerarray[i];
-        this.infoWindowOpened.close();
+        //this.infoWindowOpened.close();
       }
 
       this.markerarray = [];
@@ -525,8 +525,9 @@ export class AppComponent implements OnInit {
     var temp: any = [];
     if (type === 'first12') {
       temp = [];
+     
       this.map_title = "First 12 Months Production Map"
-
+       console.log(this.map_title);
       this.latlong.forEach(element => {
         temp.push(this.calculateROI(element.firsttwelveoil, element.firsttwelvegas));
       });
