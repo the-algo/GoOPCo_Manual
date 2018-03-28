@@ -14,7 +14,7 @@
 
                             <div class="row">
                                 <div class="col-md-6" style="text-align: left; font-weight: bold">
-                                    {{ map_title }}
+                                    {{ this.map_title }}
                                 </div>
                                 <div class="col-md-6" style="text-align: right">
                                         <button class="btn" (click)="onReload()">Reset Map</button>
@@ -28,11 +28,15 @@
                                 <div class="col-md-12">
                                     <agm-map [mapTypeId]="'satellite'" gestureHandling="greedy" [scrollwheel]="false" [zoom]="zoom" [latitude]="lati" [longitude]="longi"
                                         (mapReady)="changeTilt($event)">
-                                        <agm-marker *ngFor="let marker of latlong; let pos = index" iconUrl="{{ marker.url }}" (markerClick)="onMarkerClickLocation(pos, infoRef)"
+                                        <agm-marker  *ngFor="let marker of latlong; let pos = index" iconUrl="{{ marker.url }}" #infoRef (markerClick)="onMarkerClickLocation(pos, infoRef)"
                                             [latitude]="marker.latitude" [longitude]="marker.longitude">
-                                            <agm-info-window #infoRef>
+                                       <!--
+                                            <agm-info-window>
+                                             
                                                 <strong>ROI : {{ marker.roi_percentage? marker.roi_percentage : '0' }} %</strong>
+                                             
                                             </agm-info-window>
+                                        -->
                                         </agm-marker>
                                     </agm-map>
                                 </div>
@@ -81,7 +85,7 @@
                                 <div class="col-xs-2" style="text-align:center; font-size: 11px">501%+</div>
                             </div>
                         -->       
-                            <br>
+                          
                             <div class="row">
                                 <div class="col-xs-6" style="text-align:center;">
                                     <img src="assets/pointer.png" height="20px" width="22px"> Current Selected
@@ -113,49 +117,49 @@
                                              <b>:</b> {{ api_uwi }}</div>
                                      </div>
 
-                                     <br>
+                                   
 
                                      <div class="row">
                                          <div class="col-md-12">Well/Lease Name
                                              <b>:</b> {{ lease_name }}</div>
                                      </div>
 
-                                     <br>
+                                    
 
                                      <div class="row">
                                          <div class="col-md-12">Operator
                                              <b>:</b> {{ operator_name }}</div>
                                      </div>
 
-                                     <br>
+                                   
 
                                      <div class="row">
                                          <div class="col-md-12">Status
                                              <b>:</b> {{ production_status }}</div>
                                      </div>
 
-                                     <br>
+                                
 
                                      <div class="row">
                                          <div class="col-md-12">County
                                              <b>:</b> {{ county }}</div>
                                      </div>
 
-                                     <br>
+                                  
 
                                      <div class="row">
                                          <div class="col-md-12">State
                                              <b>:</b> {{ state }}</div>
                                      </div>
 
-                                     <br>
+                                   
 
                                      <div class="row">
                                          <div class="col-md-12">Drill Type
                                              <b>:</b> {{ drill_type }}</div>
                                      </div>
 
-                                     <br>
+                                    
 
                                      <div class="row">
                                          <div class="col-md-12">Measured Depth(TD)
@@ -168,7 +172,7 @@
 
                                  <div class="col-md-6">
 
-                                     <div class="row" style="min-height:47px;">
+                                     <div class="row" style="min-height:23px;">
                                      </div>
 
                                      <div class="row">
@@ -176,42 +180,42 @@
                                              <b>:</b> {{ cum_oil ? (cum_oil | number) : (cum_oil) }}</div>
                                      </div>
 
-                                     <br>
+                                  
 
                                      <div class="row">
                                          <div class="col-md-12">Cumulative Gas
                                              <b>:</b> {{ cum_gas ? (cum_gas | number) : (cum_gas) }}</div>
                                      </div>
 
-                                     <br>
+                               
 
                                      <div class="row">
                                          <div class="col-md-12">First Production
                                              <b>:</b> {{ first_prod_date }}</div>
                                      </div>
 
-                                     <br>
+                                   
 
                                      <div class="row">
                                          <div class="col-md-12">Last Production
                                              <b>:</b> {{ last_prod_date }}</div>
                                      </div>
 
-                                     <br>
+                                   
 
                                      <div class="row">
                                          <div class="col-md-12">Reservoir
                                              <b>:</b> {{ reservior }}</div>
                                      </div>
 
-                                     <br>
+                                   
 
                                      <div class="row">
                                          <div class="col-md-12">Longitude
                                              <b>:</b> {{ long }}</div>
                                      </div>
 
-                                     <br>
+                                     
 
                                      <div class="row">
                                          <div class="col-md-12">Latitude
@@ -219,6 +223,47 @@
                                      </div>
                                  </div>
                         </div>
+
+                        <br>
+
+                        <div class="row" style="padding-top:15px">
+                        
+                                <div class="col-md-12">
+                                        <table class="table" style="font-size: 14px;">
+                                            <thead>
+                                                <tr style="background-color: #93d04f">
+                                                    <th>PRODUCTION HISTORY BY MONTHS</th>
+                                                    <th style="cursor:pointer; color:blue" (click)="onProductionClick('first12')">FIRST 12</th>
+                                                    <th style="cursor:pointer; color:blue" (click)="onProductionClick('first24')">FIRST 24</th>
+                                                    <th style="cursor:pointer; color:blue" (click)="onProductionClick('first60')">FIRST 60</th>
+                                                    <th style="cursor:pointer; color:blue" (click)="onProductionClick('last12')">LAST 12</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">Barrels of Oil</th>
+                                                    <td>{{firsttwelveoil ? firsttwelveoil : '0'}}</td>
+                                                    <td>{{firsttwentyfouroil ? firsttwentyfouroil : '0'}}</td>
+                                                    <td>{{firstsixtyoil ? firstsixtyoil : '0'}}</td>
+                                                    <td>{{lasttwelveoil ? lasttwelveoil : '0'}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">MCF of Gas</th>
+                                                    <td>{{firsttwelvegas ? firsttwelvegas : '0'}}</td>
+                                                    <td>{{firsttwentyfourgas ? firsttwentyfourgas : '0'}}</td>
+                                                    <td>{{firstsixtygas ? firstsixtygas : '0'}}</td>
+                                                    <td>{{lasttwelvegas ? lasttwelvegas : '0'}}</td>
+                                                </tr>
+                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                        </div>
+
+
+
                  </div>
 
 
